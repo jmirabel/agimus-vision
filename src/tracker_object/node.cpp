@@ -222,8 +222,11 @@ void Node::imageProcessing()
             detector_ptr->drawDebug( _image );
         }
       }
-      if (!result.ids.empty())
+      if (!result.ids.empty()) {
+        ros::Duration delay(0.5);
+        delay.sleep();
         _detection_publisher.publish(result);
+      }
 
       ros::Time time_end (ros::Time::now());
       ros::Duration delay = time_end - timestamp;
