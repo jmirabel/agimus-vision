@@ -1,0 +1,33 @@
+V1
+# Circle model
+10                    # Number of points
+# 3D points
+# Tag points
+ 0.06  0.06 0.0
+ 0.06 -0.06 0.0
+-0.06 -0.06 0.0
+-0.06  0.06 0.0
+# Cicle points
+ 0.0   0.0   0.0 # point 4
+ 0.5   0.15  0.0
+-0.063 0.15  0.0 # point 6
+-0.008 0.15  0.0
+ 0.050 0.15  0.0
+ 0.109 0.15  0.0 # point 9
+# 3D lines
+0
+# Faces from 3D lines
+0
+# Faces from 3D points
+1
+# 4 3 4 5 6
+4 0 3 2 1
+# 3D cylinders
+0
+# 3D circles
+4                    # Number of circles
+0.005 6 4 5           # circle 0: [radius] [circle center] [1st point on circle plane] [2nd point on circle plane]
+0.005 7 4 5           # circle 0: [radius] [circle center] [1st point on circle plane] [2nd point on circle plane]
+0.005 8 4 5           # circle 0: [radius] [circle center] [1st point on circle plane] [2nd point on circle plane]
+0.005 9 4 5           # circle 0: [radius] [circle center] [1st point on circle plane] [2nd point on circle plane]
+# 0

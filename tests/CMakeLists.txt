@@ -14,3 +14,15 @@ target_compile_options(tracker-apriltag
   PUBLIC -std=c++11)
 
 add_test(tracker-apriltag tracker-apriltag)
+
+add_executable(read-videofile
+  read-videofile.cpp)
+#PKG_CONFIG_USE_DEPENDENCY(apriltag-detector visp)
+target_include_directories(read-videofile SYSTEM PUBLIC ${catkin_INCLUDE_DIRS})
+target_link_libraries(read-videofile
+  ${catkin_LIBRARIES} ${V4L2_LIBRARIES} ${PROJECT_NAME}_tracker_object_lib
+)
+target_compile_options(read-videofile
+  PUBLIC -std=c++11)
+
+add_test(read-videofile read-videofile)
