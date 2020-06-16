@@ -48,6 +48,6 @@ tags:
         z: 0.
         w: 0.
 object_name: box
-visp_xml_config_file: /home/jmirabel/devel/robotpkg/src/agimus-vision/tests/mbt-config.xml
+visp_xml_config_file: /home/pal/catkin_ws/src/agimus-vision/tests/mbt-config.xml
 tracker_type: edgeklttracker
-model_path: /home/jmirabel/devel/robotpkg/src/agimus-vision/tests/box.cao
+model_path: /home/pal/catkin_ws/src/agimus-vision/tests/box.cao

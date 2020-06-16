@@ -62,8 +62,8 @@ Node::Node()
  , _debug_display{ nullptr }
 {
     // Get parameters for the node
-    _node_handle.param<std::string>("imageTopic", _image_topic, "/camera/rgb/image_rect_color");
-    _node_handle.param<std::string>("cameraInfoTopic", _camera_info_topic, "/camera/rgb/camera_info");
+    _node_handle.param<std::string>("imageTopic", _image_topic, "/xtion/rgb/image_rect_color");
+    _node_handle.param<std::string>("cameraInfoTopic", _camera_info_topic, "/xtion/rgb/camera_info");
 
     // Initialize camera parameters
     ROS_INFO_STREAM("Wait for camera info message on " << _camera_info_topic);
@@ -72,22 +72,22 @@ Node::Node()
           _node_handle);
     if (!cam_info_msg) return;
     cameraInfoCallback(cam_info_msg);
-   
-    // Use those parameters to create the camera 
+
+    // Use those parameters to create the camera
     _image_sub = _node_handle.subscribe(_image_topic, 1,
         &Node::frameCallback, this);
     _camera_info_sub = _node_handle.subscribe(_camera_info_topic, 1,
         &Node::cameraInfoCallback, this);
 
     // TF node of the camera seeing the tags
-    _node_handle.param<std::string>("cameraFrame", _tf_camera_node, "rgbd_rgb_optical_frame");
+    _node_handle.param<std::string>("cameraFrame", _tf_camera_node, "xtion_rgb_optical_frame");
 
     // Broadcasting methods
-    _node_handle.param<bool>("broadcastTf", _broadcast_tf, false);
+    _node_handle.param<bool>("broadcastTf", _broadcast_tf, true);
     _node_handle.param<std::string>("broadcastTfPostfix", _broadcast_tf_postfix, "");
-    _node_handle.param<bool>("broadcastTopic", _broadcast_topic, false);
-    
-    // TODO: Switch for detector types and tracker init 
+    _node_handle.param<bool>("broadcastTopic", _broadcast_topic, true);
+
+    // TODO: Switch for detector types and tracker init
     std::string object_type{};
     _node_handle.param<std::string>( "objectType", object_type, "apriltag" );
     std::for_each( object_type.begin(), object_type.end(), [](char &c){ c = (char)::tolower( c ); } );
@@ -149,7 +149,7 @@ void Node::imageProcessing()
     static tf2_ros::TransformBroadcaster broadcaster;
 
     // Display the tags seen by the camera
-    bool debug_display = _node_handle.param<bool>("debugDisplay", false);
+    bool debug_display = _node_handle.param<bool>("debugDisplay", true);
     if (debug_display && !_debug_display) {
       _debug_display.reset( new vpDisplayOpenCV{} );
       _debug_display->init(_gray_image);
@@ -161,7 +161,7 @@ void Node::imageProcessing()
 
     if( debug_display )
       vpDisplay::display(_gray_image);
-
+    // ROS_INFO_STREAM("skip debug.");
     if(_aprilTagDetector)
       _aprilTagDetector->imageReady = false;
 
@@ -169,8 +169,11 @@ void Node::imageProcessing()
 
     for( Tracker& tracker : _trackers )
     {
+      // ROS_INFO_STREAM("Processing.");
       tracker.process(_gray_image);
+
       if (tracker.hasPose()) {
+        // ROS_INFO_STREAM("Has Pose.");
         // c: camera
         // o: object
         vpHomogeneousMatrix cMo_vp;

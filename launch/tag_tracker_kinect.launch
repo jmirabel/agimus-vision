@@ -1,11 +1,16 @@
 <launch>
 
-  <param name="imageTopic" value="/camera/rgb/image_rect_color" />
-  <param name="cameraInfoTopic" value="/camera/rgb/camera_info" />
-  <param name="parentNode" value="/talos/rgbd_rgb_optical_frame" />
-  <param name="displayDebug" value=true />
-  <param name="broadcastTf" value=true />
+  <param name="imageTopic" value="/xtion/rgb/image_rect_color" />
+  <param name="cameraInfoTopic" value="/xtion/rgb/camera_info" />
+  <param name="parentNode" value="xtion_rgb_optical_frame" />
 
-  <node pkg="agimus_vision" type="tracker_object" name="tag_tracker" />
+  <!-- <param name="imageTopic" value="/camera/rgb/image_rect_color" />
+  <param name="cameraInfoTopic" value="/camera/rgb/camera_info" />
+  <param name="parentNode" value="/talos/rgbd_rgb_optical_frame" /> -->
+  <param name="displayDebug" value="true" />
+  <param name="broadcastTf" value="true" />
+  <param name="broadcastTopic" value="true" />
+
+  <node pkg="agimus_vision" type="tracker_object" name="tag_tracker" output="screen" />
 
 </launch>
